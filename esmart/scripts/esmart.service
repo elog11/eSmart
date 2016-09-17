@@ -1,0 +1,13 @@
+[Unit]
+Description=eSmart server
+After=syslog.target network.target influxd.service
+
+[Service]
+Type=forking
+ExecStart=/var/www/esmart/esmart/esmart_daemon.py
+ExecStop=/var/www/esmart/esmart/esmart_client.py -t
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+Alias=esmart.service
